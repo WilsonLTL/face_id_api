@@ -177,7 +177,7 @@ def api_article3():
         result = get_user_db()
         if result is not None:
             for items in result:
-                item = result[items]
+                item = result[str(items)]
                 if item['user_id'] == user_id:
                     item['user_image'].append(image_str)
                     result = insert_exist_user(item,items)
