@@ -191,7 +191,7 @@ def api_article3():
                                 result = {
                                     'status': False
                                 }
-
+                            return jsonify(result)
         else:
             result ={
                 'status':False,
