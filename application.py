@@ -108,7 +108,7 @@ def api_article2():
             label = user_label.encode("utf-8")
             print(label.decode("utf-8"))
             label = label.decode("utf-8")
-            user_id = label+"_"+''.join(random.choices(string.ascii_uppercase + string.digits, k=10))
+            user_id = label+"_"+''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(10))
             user_infos = {
                 "user_id":user_id,
                 "infos":[
