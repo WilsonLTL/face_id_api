@@ -174,23 +174,24 @@ def api_article3():
                 }
                 item['infos'][0]['face_image'].append(image)
 
-        result = get_user_db()
-        if result is not None:
-            for items in result:
-                item = result[str(items)]
-                if item['user_id'] == user_id:
-                    item['user_image'].append(image_str)
-                    result = insert_exist_user(item,items)
-                    if result is True:
-                        with open('data.json', 'w') as outfile:
-                            json.dump(data, outfile)
-                        result = {
-                            'status':True
-                        }
-                    else:
-                        result = {
-                            'status': False
-                        }
+                result = get_user_db()
+                if result is not None:
+                    for items in result:
+                        item = result[str(items)]
+                        if item['user_id'] == user_id:
+                            item['user_image'].append(image_str)
+                            result = insert_exist_user(item,items)
+                            if result is True:
+                                with open('data.json', 'w') as outfile:
+                                    json.dump(data, outfile)
+                                result = {
+                                    'status':True
+                                }
+                            else:
+                                result = {
+                                    'status': False
+                                }
+                            return jsonify(result)
         else:
             result ={
                 'status':False,

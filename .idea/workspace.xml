@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6fe2509f-6d40-4cbf-973b-840117ad1882" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application.py" beforeDir="false" afterPath="$PROJECT_DIR$/application.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data.json" beforeDir="false" afterPath="$PROJECT_DIR$/data.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/face.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/face.jpeg" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -23,11 +20,20 @@
       <file leaf-file-name="application.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/application.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2450">
-              <caret line="326" column="14" selection-start-line="326" selection-start-column="14" selection-end-line="326" selection-end-column="14" />
+            <state relative-caret-position="413">
+              <caret line="193" column="50" selection-start-line="193" selection-start-column="50" selection-end-line="193" selection-end-column="50" />
               <folding>
                 <element signature="e#15#56#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="data.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-34490">
+              <caret column="7518680" selection-start-column="7518675" selection-end-column="7518680" />
             </state>
           </provider>
         </entry>
@@ -82,6 +88,7 @@
       <find>choices</find>
       <find>林鄭月娥</find>
       <find>print</find>
+      <find>Ethan</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -226,10 +233,10 @@
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3291714" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.501355" side_tool="true" weight="0.3291714" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49864498" visible="true" weight="0.3291714" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49864498" weight="0.3291714" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49864498" weight="0.21339387" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.49864498" visible="true" weight="0.21339387" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.28861788" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
@@ -529,15 +536,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/data.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="29">
-          <caret column="143" selection-start-column="143" selection-end-column="143" />
+        <state relative-caret-position="-34490">
+          <caret column="7518680" selection-start-column="7518675" selection-end-column="7518680" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2450">
-          <caret line="326" column="14" selection-start-line="326" selection-start-column="14" selection-end-line="326" selection-end-column="14" />
+        <state relative-caret-position="413">
+          <caret line="193" column="50" selection-start-line="193" selection-start-column="50" selection-end-line="193" selection-end-column="50" />
           <folding>
             <element signature="e#15#56#0" expanded="true" />
           </folding>
