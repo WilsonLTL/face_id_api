@@ -151,50 +151,55 @@ def api_article2():
 
 @app.route('/insert_exist_user', methods=['POST'])
 def api_article3():
-    json_data = open('data.json').read()
-    data = json.loads(json_data)
+    try:
+        json_data = open('data.json').read()
+        data = json.loads(json_data)
 
-    user_id = request.form['user_id']
-    user_image = request.files['image']
-    if str(user_image.filename).split(".")[1].lower() in ALLOWED_EXTENSIONS:
-        user_image.save("face.jpeg")
-    with open("face.jpeg", "rb") as imageFile:
-        image_str = base64.b64encode(imageFile.read()).decode('utf-8')
+        user_id = request.form['user_id']
+        user_image = request.files['image']
+        if str(user_image.filename).split(".")[1].lower() in ALLOWED_EXTENSIONS:
+            user_image.save("face.jpeg")
+        with open("face.jpeg", "rb") as imageFile:
+            image_str = base64.b64encode(imageFile.read()).decode('utf-8')
 
-    face_image = face_recognition.load_image_file("face.jpeg")
-    face_embedding_code = face_recognition.face_encodings(face_image)
+        face_image = face_recognition.load_image_file("face.jpeg")
+        face_embedding_code = face_recognition.face_encodings(face_image)
 
-    for item in data['people']:
-        if item['user_id'] == user_id:
-            image = {
-                'image_label':user_image.filename,
-                'image_str':image_str,
-                'face_embedding_code':np.array(face_embedding_code).tolist()
-            }
-            item['infos'][0]['face_image'].append(image)
-
-    result = get_user_db()
-    if result is not None:
-        for items in result:
-            item = result[items]
+        for item in data['people']:
             if item['user_id'] == user_id:
-                item['user_image'].append(image_str)
-                result = insert_exist_user(item,items)
-                if result is True:
-                    with open('data.json', 'w') as outfile:
-                        json.dump(data, outfile)
-                    result = {
-                        'status':True
-                    }
-                else:
-                    result = {
-                        'status': False
-                    }
-    else:
-        result ={
-            'status':False,
-            'exception':'Null request'
-        }
+                image = {
+                    'image_label':user_image.filename,
+                    'image_str':image_str,
+                    'face_embedding_code':np.array(face_embedding_code).tolist()
+                }
+                item['infos'][0]['face_image'].append(image)
+
+        result = get_user_db()
+        if result is not None:
+            for items in result:
+                item = result[items]
+                if item['user_id'] == user_id:
+                    item['user_image'].append(image_str)
+                    result = insert_exist_user(item,items)
+                    if result is True:
+                        with open('data.json', 'w') as outfile:
+                            json.dump(data, outfile)
+                        result = {
+                            'status':True
+                        }
+                    else:
+                        result = {
+                            'status': False
+                        }
+        else:
+            result ={
+                'status':False,
+                'exception':'Null request'
+            }
+    except Exception as ex:
+        result = {'status':False,'exception':ex}
+        return jsonify(result)
+
     return jsonify(result)
 
 
