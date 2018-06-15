@@ -12,7 +12,8 @@ http://ec2-54-169-37-160.ap-southeast-1.compute.amazonaws.com:5000
 
 ### list_all_user
 Format: GET <br >
-url: /list_all_user<br >
+Url: /list_all_user<br >
+Time cost: < 3000ms
 Output JSON format:
 ```json
 {
@@ -33,10 +34,31 @@ Output JSON format:
 }
 ```
 
+### insert_new_user
+Format: POST <br >
+Url: /insert_exist_user
+Time cost: < 2000ms
+Input Form-data format:
+```form-data
+{
+    "label": label,
+    "image": file
+}
+```
+
+Output JSON format:
+```json
+{
+    "status": true/false
+}
+```
+
 ### insert_exist_user
 Format: POST <br >
-Input JSON format:
-```json
+Url: /insert_exist_user
+Time cost: < 7000ms, affect by image size
+Input Form-data format:
+```form-data
 {
     "user_id": user_id_in_firebase,
     "image": file
@@ -52,6 +74,8 @@ Output JSON format:
 
 ### delete_user
 Format: POST <br >
+Url: /delete_user
+Time cost: < 4000ms
 Input JSON format:
 ```json
 {
@@ -68,6 +92,8 @@ Output JSON format:
 
 ### face_id
 Format: POST <br >
+Url: /face_id
+Time cost: < 4000ms
 Input JSON format:
 ```json
 {
@@ -77,7 +103,26 @@ Input JSON format:
 }
 ```
 
-Output:
+Output html:
 ```html
 Identify user successful: <username>!
+```
+
+### face_id_image
+Format: POST <br >
+Url: /face_id_image
+Time cost: < 4000ms
+Input Form-data format:
+```form-data
+{
+    "image": file
+}
+```
+
+Output JSON format:
+```json
+{
+    "status": true/false,
+    "user_label": username
+}
 ```
