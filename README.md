@@ -13,14 +13,14 @@ http://ec2-54-169-37-160.ap-southeast-1.compute.amazonaws.com:5000
 ### list_all_user
 Format: GET <br >
 url: /list_all_user<br >
-Input JSON format:
+Output JSON format:
 ```json
 {
     "status": true,
     "user_detail": [
         {
-            "user_id": "Wilson_DMDIWXEXTZ",
-            "user_label": "Wilson"
+            "user_id": user_id_in_firebase,
+            "user_label": user_label
         },
     ]
 }
