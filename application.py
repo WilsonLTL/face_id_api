@@ -13,6 +13,8 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 fb = firebase.FirebaseApplication('https://voice-kit-v2-demo.firebaseio.com', None)
 app = Flask(__name__)
 
+DATA_JSON_LOCATION = "data.json"
+FACE_JPEG_LOCATION = "face.jpeg"
 
 @app.route('/')
 def hello_world():
@@ -21,7 +23,7 @@ def hello_world():
 
 @app.route('/face_id', methods=['POST'])
 def api_article1():
-    json_data = open('data.json').read()
+    json_data = open(DATA_JSON_LOCATION).read()
     data = json.loads(json_data)
 
     known_face_encodings = []
@@ -46,12 +48,12 @@ def api_article1():
     voice_kit_id = request.json['vocie_kit_id']
     vision_kit_id = request.json['vision_kit_id']
 
-    fh = open("face.jpeg", "wb")
+    fh = open(FACE_JPEG_LOCATION, "wb")
     fh.write(base64.decodebytes(bytes(text, 'utf-8')))
     fh.close()
 
     print("Start:", datetime.datetime.now())
-    face_image = face_recognition.load_image_file("face.jpeg")
+    face_image = face_recognition.load_image_file(FACE_JPEG_LOCATION)
     face_encodings = face_recognition.face_encodings(face_image)
     name = "Unknown"
 
@@ -93,11 +95,11 @@ def api_article7():
 
     try:
         user_image = request.files['image']
-        json_data = open('data.json').read()
+        json_data = open(DATA_JSON_LOCATION).read()
         data = json.loads(json_data)
 
         if str(user_image.filename).split(".")[1].lower() in ALLOWED_EXTENSIONS:
-            user_image.save("face.jpeg")
+            user_image.save(FACE_JPEG_LOCATION)
 
             print('Start getting data:')
             start_time = datetime.datetime.now()
@@ -112,7 +114,7 @@ def api_article7():
             known_face_encodings = np.array(known_face_encodings)
 
             print("Start:", datetime.datetime.now())
-            face_image = face_recognition.load_image_file("face.jpeg")
+            face_image = face_recognition.load_image_file(FACE_JPEG_LOCATION)
             face_encodings = face_recognition.face_encodings(face_image)
             name = "Unknown"
 
@@ -138,18 +140,18 @@ def api_article7():
 def api_article2():
     user_image = request.files['image']
     user_label = request.form['label']
-    json_data = open('data.json').read()
+    json_data = open(DATA_JSON_LOCATION).read()
     data = json.loads(json_data)
 
     try:
         if str(user_image.filename).split(".")[1].lower() in ALLOWED_EXTENSIONS:
-            user_image.save("face.jpeg")
+            user_image.save(FACE_JPEG_LOCATION)
 
             print("Start:", datetime.datetime.now())
-            with open("face.jpeg", "rb") as imageFile:
+            with open(FACE_JPEG_LOCATION, "rb") as imageFile:
                 image_str = base64.b64encode(imageFile.read()).decode('utf-8')
 
-            face_image = face_recognition.load_image_file("face.jpeg")
+            face_image = face_recognition.load_image_file(FACE_JPEG_LOCATION)
             face_embedding_code = face_recognition.face_encodings(face_image)
             print(user_label.encode("utf-8"))
             label = user_label.encode("utf-8")
@@ -175,7 +177,7 @@ def api_article2():
             result = insert_new_user_db(user_id,label,image_str)
 
             if result is True:
-                with open('data.json', 'w') as outfile:
+                with open(DATA_JSON_LOCATION, 'w') as outfile:
                     json.dump(data, outfile)
                     result = {
                         'status': 'success'
@@ -198,17 +200,17 @@ def api_article2():
 @app.route('/insert_exist_user', methods=['POST'])
 def api_article3():
     try:
-        json_data = open('data.json').read()
+        json_data = open(DATA_JSON_LOCATION).read()
         data = json.loads(json_data)
 
         user_id = request.form['user_id']
         user_image = request.files['image']
         if str(user_image.filename).split(".")[1].lower() in ALLOWED_EXTENSIONS:
-            user_image.save("face.jpeg")
-        with open("face.jpeg", "rb") as imageFile:
+            user_image.save(FACE_JPEG_LOCATION)
+        with open(FACE_JPEG_LOCATION, "rb") as imageFile:
             image_str = base64.b64encode(imageFile.read()).decode('utf-8')
 
-        face_image = face_recognition.load_image_file("face.jpeg")
+        face_image = face_recognition.load_image_file(FACE_JPEG_LOCATION)
         face_embedding_code = face_recognition.face_encodings(face_image)
 
         for item in data['people']:
@@ -228,7 +230,7 @@ def api_article3():
                             item['user_image'].append(image_str)
                             result = insert_exist_user(item,items)
                             if result is True:
-                                with open('data.json', 'w') as outfile:
+                                with open(DATA_JSON_LOCATION, 'w') as outfile:
                                     json.dump(data, outfile)
                                 result = {
                                     'status':True
@@ -276,7 +278,7 @@ def api_article4():
 
 @app.route('/delete_user', methods=['POST'])
 def api_article5():
-    json_data = open('data.json').read()
+    json_data = open(DATA_JSON_LOCATION).read()
     data = json.loads(json_data)
 
     new_data = {"people":[]}
@@ -297,7 +299,7 @@ def api_article5():
                 print(items)
                 delete_user_db(items)
                 data = new_data
-                with open('data.json', 'w') as outfile:
+                with open(DATA_JSON_LOCATION, 'w') as outfile:
                     json.dump(data, outfile)
     else:
         res_result ={
@@ -312,7 +314,7 @@ def api_article6():
     image_str = ""
     user_id = request.json["user_id"]
     image_label = request.json["image_label"]
-    json_data = open('data.json').read()
+    json_data = open(DATA_JSON_LOCATION).read()
     data = json.loads(json_data)
 
     new_data = {
@@ -358,7 +360,7 @@ def api_article6():
             print(new_result)
             update_user(id,new_result)
 
-    with open('data.json', 'w') as outfile:
+    with open(DATA_JSON_LOCATION, 'w') as outfile:
         json.dump(new_data, outfile)
     return jsonify({"status":"Success"})
 
