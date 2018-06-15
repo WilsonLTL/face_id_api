@@ -128,7 +128,6 @@ def api_article2():
             result = insert_new_user_db(user_id,label,image_str)
 
             if result is True:
-                print(data)
                 with open('data.json', 'w') as outfile:
                     json.dump(data, outfile)
                     result = {
