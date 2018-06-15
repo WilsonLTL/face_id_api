@@ -1,0 +1,12 @@
+[Unit]
+Description=face_id_api
+
+[Service]
+Type=simple
+Restart=no
+User=pi
+ExecStart=/usr/bin/python3.5 /home/ubuntu/face_id_api/application.py
+
+[Install]
+WantedBy=multi-user.target
+
