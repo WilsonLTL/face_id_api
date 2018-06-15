@@ -7,7 +7,7 @@ import random,string
 import numpy as np
 from firebase import firebase
 import face_recognition as face_recognition
-import face_recognition_models
+
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 fb = firebase.FirebaseApplication('https://voice-kit-v2-demo.firebaseio.com', None)
@@ -39,7 +39,6 @@ def api_article1():
     print("Avg :", (datetime.datetime.now() - start_time)/len(known_face_encodings))
 
 
-    print(known_face_names)
     known_face_encodings = np.array(known_face_encodings)
     fb = firebase.FirebaseApplication('https://voice-kit-v2-demo.firebaseio.com', None)
 
@@ -315,6 +314,52 @@ def api_article6():
         json.dump(new_data, outfile)
     return jsonify({"status":"Success"})
 
+@app.route('/face_id_image', methods=['POST'])
+def api_article7():
+    known_face_encodings = []
+    known_face_names = []
+
+    try:
+        user_image = request.files['image']
+        json_data = open('data.json').read()
+        data = json.loads(json_data)
+
+        if str(user_image.filename).split(".")[1].lower() in ALLOWED_EXTENSIONS:
+            user_image.save("face.jpeg")
+
+            print('Start getting data:')
+            start_time = datetime.datetime.now()
+            for item in data['people']:
+                for face_code in item['infos'][0]['face_image']:
+                    known_face_names.append(item['infos'][0]['label'])
+                    for code in face_code['face_embedding_code']:
+                        known_face_encodings.append(code)
+            print("Finish...")
+            print("Total time:", datetime.datetime.now() - start_time)
+            print("Avg :", (datetime.datetime.now() - start_time) / len(known_face_encodings))
+            known_face_encodings = np.array(known_face_encodings)
+
+            print("Start:", datetime.datetime.now())
+            face_image = face_recognition.load_image_file("face.jpeg")
+            face_encodings = face_recognition.face_encodings(face_image)
+            name = "Unknown"
+
+            for face_encoding in face_encodings:
+                # See if the face is a match for the known face(s)
+                print("Start compare:", datetime.datetime.now())
+                start_time = datetime.datetime.now()
+                match = face_recognition.compare_faces(known_face_encodings, face_encoding)
+                print("Finish compare,total time:", datetime.datetime.now() - start_time)
+                print(match)
+                if True in match:
+                    first_match_index = match.index(True)
+                    name = known_face_names[first_match_index]
+                    print("Identify user successful: {}!".format(name))
+                    print("Finish:", datetime.datetime.now())
+                    return jsonify({"status": True,"user_label": name})
+            return jsonify({"status": True,"user_label": "Newuser"})
+    except Exception as ex:
+        return jsonify({"status": False, "exception":ex})
 
 def get_user_db():
     result = fb.get('/webservice', None)
