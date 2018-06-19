@@ -4,8 +4,19 @@ A source code which connect to AWS ec2 ubuntu env
 ## application.py
 The main file of api, run it <br >
 
-PS: for modify the host port, modify line 362
+PS1: for modify the host port, data file, image file, modify file config
 
+## setting in EC2
+```
+cd /usr/sbin
+sudo touch api.sh
+sudo chown root:root api.sh
+sudo chmod +x api.sh
+code in api.sh : python3.5 /home/username/face_id_api/application.py
+crontab -e
+add: @reboot /usr/sbin/application.py
+sudo reboot
+```
 
 ## api link:
 http://ec2-54-169-37-160.ap-southeast-1.compute.amazonaws.com:5000
