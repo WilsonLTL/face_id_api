@@ -5,9 +5,20 @@ A source code which connect to AWS ec2 ubuntu env
 The main file of api, run it <br >
 
 PS1: for modify the host port, data file, image file, modify file config
+PS2: Modify the file location in ex
+PS3: Insert all requirement in requirement.txt
+PS4: If fail insert in dlib, ref "Dlib install"
 
-## setting in EC2
+## setting in EC2 (insert requirement)
+```bash
+sudo apt-get update
+sudo apt-get install build-essential cmake
+sudo apt-get install libgtk-3-dev
+sudo apt-get install libboost-all-dev
 ```
+
+## setting in EC2 (auto start setting)
+```bash
 cd /usr/sbin
 sudo touch api.sh
 sudo chown root:root api.sh
@@ -16,6 +27,13 @@ code in api.sh : python3.5 /home/username/face_id_api/application.py
 crontab -e
 add: @reboot /usr/sbin/application.py
 sudo reboot
+```
+
+## Dlib install
+```bash
+git clone https://github.com/davisking/dlib.git
+cd dlib
+sudo python3 setup.py install
 ```
 
 ## api link:
