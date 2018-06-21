@@ -25,7 +25,7 @@ sudo chown root:root api.sh
 sudo chmod +x api.sh
 code in api.sh : python3.5 /home/username/face_id_api/application.py
 crontab -e
-add: @reboot /usr/sbin/application.py
+add: @reboot /usr/sbin/api.sh
 sudo reboot
 ```
 

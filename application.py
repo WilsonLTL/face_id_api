@@ -134,6 +134,41 @@ def api_article7():
         return jsonify({"status": False, "exception":ex})
 
 
+@app.route('/face_id_image_compare', methods=['POST'])
+def api_article8():
+    known_face_encodings = []
+
+    try:
+        user_image1 = request.files['image1']
+        user_image2 = request.files['image2']
+        json_data = open(cf.DATA_JSON_LOCATION).read()
+        data = json.loads(json_data)
+
+        if str(user_image1.filename).split(".")[1].lower() in ALLOWED_EXTENSIONS and str(user_image2.filename).split(".")[1].lower() in ALLOWED_EXTENSIONS :
+            user_image1.save(cf.FACE_COMPARE_LOCATION1)
+            user_image2.save(cf.FACE_COMPARE_LOCATION2)
+
+            print("Start:", datetime.datetime.now())
+            face_image1 = face_recognition.load_image_file(cf.FACE_COMPARE_LOCATION1)
+            face_encodings1 = face_recognition.face_encodings(face_image1)
+
+            face_image2 = face_recognition.load_image_file(cf.FACE_COMPARE_LOCATION2)
+            face_encodings2 = face_recognition.face_encodings(face_image2)
+            name = "Unknown"
+
+            print("Start compare:", datetime.datetime.now())
+            start_time = datetime.datetime.now()
+            match = face_recognition.compare_faces(np.array(face_encodings1), np.array(face_encodings2))
+            print("Finish compare,total time:", datetime.datetime.now() - start_time)
+            print(match)
+            if True in match:
+                first_match_index = match.index(True)
+                return jsonify({"status": True, "result": True})
+        return jsonify({"status": True, "result":False})
+    except Exception as ex:
+        return jsonify({"status": False, "exception":""+str(ex)})
+
+
 @app.route('/insert_new_user', methods=['POST'])
 def api_article2():
     user_image = request.files['image']
