@@ -13,7 +13,7 @@ itsdangerous==0.24
 Jinja2==2.10
 MarkupSafe==1.0
 numpy==1.7.0
-Pillow==5.1.0
+Pillow==9.0.1
 python-firebase==1.2
 requests==2.18.4
 scikit-build==0.6.1
